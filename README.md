@@ -6,25 +6,31 @@ Static site (HTML, CSS, vanilla JS). No build step. Deploys as-is on Vercel.
 
 | Path | What |
 |---|---|
-| `js/data.js` | **All content**: identity, links, stats, projects, trades, BOM, process, experience, toolkit. The TODO list is at the top. |
+| `js/data.js` | **All content**: identity, links, stats, projects, trades, BOM, process, experience, toolkit |
 | `js/estimate.js` | Rupee formatting, BOQ total checks, trade-wise bar chart, BOM table, the three layer plates (Drawing → BOM → BOQ), revision timeline |
 | `js/home.js` | Home page rendering and scroll scenes |
 | `js/case.js` | Case-study template (one per project) |
 | `js/common.js` | Header, menus, footer, smooth scroll, page transitions, helpers |
 | `css/style.css`, `css/case.css` | Styles ("architectural drawing sheet" theme) |
 | `case-studies/*.html` | Generated shells, one per project |
+| `assets/Dinesh-Kumar-Resume.pdf` | One-page resume, generated from `js/data.js` |
 | `assets/projects/<slug>/` | Drawing crops, layer plates and blurred BOQ summary sheets |
 | `assets/frames/` | Hero scroll animation (240 desktop / 120 mobile frames) |
 
 ## Editing
 
 1. Change content in `js/data.js` only.
-2. Unfinished items are written as `[TODO: …]`. While `showTodos: true` they show as dashed TODO chips; set it to `false` to hide them all on the live site.
-3. Check the numbers and list what's left:
+2. Check the numbers:
 
    ```sh
    node tools/verify.mjs   # trades sum to each BOQ total, GST/net, value order, every ₹ figure in the copy
-   node tools/todos.mjs    # every remaining TODO with its line number
+   ```
+
+3. Rebuild the resume PDF (`assets/Dinesh-Kumar-Resume.pdf`) after changing experience, skills or projects:
+
+   ```sh
+   npm i -D playwright && npx playwright install chromium   # once
+   node tools/build-resume.mjs
    ```
 
 4. If you add, remove or rename a project, regenerate the case-study pages:

@@ -132,20 +132,6 @@ ul, ol { padding: 0; list-style: none; }
   line-height: 1.55;
 }
 
-.todo {
-  display: inline;
-  font-family: var(--f-mono);
-  font-size: .8125em;
-  letter-spacing: .01em;
-  color: #7A4A12;
-  background: rgba(201, 198, 192, .45);
-  outline: 1px dashed rgba(122, 74, 18, .55);
-  outline-offset: 1px;
-  padding: 0 .3em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-.on-dark .todo { color: #F1D6B0; background: rgba(247, 248, 248, .08); outline-color: rgba(241, 214, 176, .5); }
 
 /* --------------------------------------------------------------------------
    Layout
@@ -1431,20 +1417,6 @@ html.pt-in::after {
    revision timeline. Same tokens as everything above.
    ========================================================================== */
 
-/* TODO chips stay on one line inside tight cells */
-.todo { white-space: normal; }
-
-/* About: portrait (or its placeholder) above the spec sheet */
-.about__photo { margin-bottom: 24px; display: grid; gap: 10px; max-width: 15rem; }
-.about__photo img, .about__photo-ph {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  background: var(--stone-deep);
-}
-.about__photo-ph svg { width: 100%; height: 100%; display: block; stroke: var(--ink); stroke-opacity: .25; fill: none; }
 
 /* Work scenes: long project names, spec rows, flag */
 .scene__name { font-size: clamp(2.125rem, 3.5vw, 3.375rem); line-height: 1.02; letter-spacing: -.028em; max-width: 16ch; }
@@ -1462,7 +1434,6 @@ html.pt-in::after {
 .revline { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; margin-top: 18px; }
 .revline__tag { padding: 2px 8px; border: 1px solid var(--ink); background: var(--stone); }
 .revline__tag.is-current { background: var(--ink); color: var(--snow); }
-.revline__tag.is-current .todo { color: #F1D6B0; background: rgba(247, 248, 248, .1); outline-color: rgba(241, 214, 176, .5); }
 .revline__track { position: relative; width: 56px; height: 1px; background: var(--ink); }
 .revline__track i { position: absolute; right: -1px; top: -3px; width: 7px; height: 7px; border-top: 1px solid var(--ink); border-right: 1px solid var(--ink); transform: rotate(45deg); }
 .revline__lbl { color: var(--muted); }
@@ -1481,7 +1452,6 @@ html.pt-in::after {
 .mini--bom .bom { font-size: 1.9cqw; }
 .mini--bom .bom th, .mini--bom .bom td { padding: .75cqw 1cqw .75cqw 0; }
 .mini--bom .bom td:nth-child(3) { color: var(--muted); }
-.mini--bom .todo { font-size: .9em; padding: 0 .3em; }
 .mini--boq { flex-direction: row; gap: 3cqw; padding: 0; }
 .mini__shot { flex: 0 0 38%; overflow: hidden; border-right: 1px solid var(--hairline); background: #fff; }
 .mini__shot img { width: 100%; height: auto; object-fit: initial; }
@@ -1553,7 +1523,6 @@ html.pt-in::after {
 .bom--compact th:nth-child(1), .bom--compact td:nth-child(1) { width: 9%; }
 .bom--compact th:nth-child(2), .bom--compact td:nth-child(2) { width: 30%; }
 .bom--compact th:nth-child(4), .bom--compact td:nth-child(4) { width: 14%; }
-.bom--compact th:nth-child(5), .bom--compact td:nth-child(5) { width: 15%; }
 .bom--compact { table-layout: fixed; }
 
 /* Lightbox sheets */
@@ -1603,9 +1572,7 @@ html.pt-in::after {
   .rev + .rev { padding-left: 0; border-left: 0; }
   .rev + .rev .rev__node { left: 0; }
 }
-.bom .todo, .chart .todo, .revline .todo { white-space: nowrap; }
 @media (max-width: 899px) { .tag__name { display: none; } }
 @media (max-width: 599px) {
   .table-scroll .bom { min-width: 640px; }
-  .about__photo { max-width: 9rem; }
 }

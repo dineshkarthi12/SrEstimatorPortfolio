@@ -25,8 +25,10 @@
       if (val != null) el.textContent = val;
     });
     $$(".js-resume").forEach((a) => {
-      a.href = DK.link(S.links.resume);
-      if (!DK.link(S.links.resume, "")) { a.removeAttribute("target"); a.querySelector(".sr-only")?.remove(); }
+      a.href = DK.asset(S.links.resume);
+      a.setAttribute("download", "");
+      a.removeAttribute("target");
+      a.querySelector(".sr-only")?.remove();
     });
     $$("[data-portfolio-total]").forEach((el) => (el.textContent = E.short(E.portfolioTotal())));
   }
@@ -43,13 +45,6 @@
     $(".about__story").innerHTML = S.about.paragraphs.map((p) => `<p class="reveal">${rich(p)}</p>`).join("");
     $(".spec").innerHTML = S.about.spec.map(([k, v]) =>
       `<div class="spec__row"><dt class="mono">${esc(k)}</dt><dd>${rich(v)}</dd></div>`).join("");
-    const ph = S.person.photo;
-    const photo = $(".about__photo");
-    if (ph && !DK.hasTodo(ph)) {
-      photo.innerHTML = `<img src="${esc(DK.asset(ph))}" alt="Portrait of ${esc(S.person.name)}" width="800" height="1000" loading="lazy" decoding="async"><span class="label">Fig. 01a — ${esc(S.person.name)}</span>`;
-    } else if (S.showTodos) {
-      photo.innerHTML = `<div class="about__photo-ph" aria-hidden="true"><svg viewBox="0 0 80 100" preserveAspectRatio="none"><path d="M0 0 80 100M80 0 0 100" vector-effect="non-scaling-stroke"/></svg></div><span class="label">Fig. 01a — Portrait ${rich(ph)}</span>`;
-    } else photo.remove();
   }
 
   function renderWork() {
@@ -150,9 +145,9 @@
   function renderContact() {
     const L = S.links;
     const sr = '<span class="sr-only"> (opens in a new tab)</span>';
-    const row = (kind, value, href, icon, external, extra = "", cls = "") => `
+    const row = (kind, value, href, icon, external, extra = "", cls = "", attrs = "") => `
       <li class="contact__row ${cls}">
-        <a class="contact__link" href="${esc(href)}" ${external ? ext : ""}>
+        <a class="contact__link" href="${esc(href)}" ${external ? ext : ""} ${attrs}>
           <span class="contact__icon">${icons[icon]}</span>
           <span class="mono contact__kind">${kind}</span>
           <span class="contact__value">${value}${external ? sr : ""}</span>
@@ -165,8 +160,7 @@
         `<button class="contact__copy" type="button" data-copy="${esc(L.email)}" aria-label="Copy email address">Copy</button>`, "contact__row--email"),
       row("Phone", esc(L.phone), L.phoneHref, "phone", false),
       row("WhatsApp", "Message me on WhatsApp", L.whatsapp, "whatsapp", true),
-      row("LinkedIn", rich(L.linkedinLabel), DK.link(L.linkedin, "#contact"), "linkedin", !!DK.link(L.linkedin, "")),
-      row("Resume", "Download resume" + (DK.link(L.resume, "") ? "" : (S.showTodos ? ' <span class="todo">TODO: resume link</span>' : "")), DK.link(L.resume, "#contact"), "doc", !!DK.link(L.resume, ""))
+      row("Resume", "Download resume (PDF)", DK.asset(L.resume), "doc", false, "", "", "download")
     ].join("") + '<li class="sr-only" aria-live="polite" id="copy-status"></li>';
   }
 

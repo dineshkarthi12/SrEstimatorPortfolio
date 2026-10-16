@@ -9,7 +9,7 @@ vm.runInNewContext(readFileSync(root + "js/data.js", "utf8"), ctx);
 const S = ctx.window.SITE;
 const V = "20261016a";
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const strip = (s) => String(s).replace(/\[TODO:[^\]]*\]/g, "").replace(/\s{2,}/g, " ").trim();
+const strip = (s) => String(s).trim();
 const short = (v) => v >= 1e7 ? `₹${(v / 1e7).toPrecision(3)} Cr` : `₹${(v / 1e5).toPrecision(3)} L`;
 const base = S.site.url.replace(/\s*\/\/.*$/, "");
 

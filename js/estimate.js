@@ -124,14 +124,12 @@
   function bomRows(p) {
     return p.trades.map((t, i) => {
       const lib = S.bomLibrary[t[2]] || { material: "", unit: "" };
-      const qty = (p.bomQty && p.bomQty[t[2]]) || "[TODO: qty]";
       return {
         ref: `M-${pad2(i + 1)}`,
         trade: t[0],
         material: (p.bomOverrides && p.bomOverrides[t[2]]) || lib.material,
         fromDrawing: !!(p.bomOverrides && p.bomOverrides[t[2]]),
         unit: lib.unit,
-        qty: t[1] == null ? "—" : qty,
         value: t[1],
         note: t[3]
       };
@@ -145,7 +143,7 @@
       <table class="bom${compact ? " bom--compact" : ""}">
         <thead><tr>
           <th scope="col">Ref.</th><th scope="col">BOQ trade</th><th scope="col">Material category</th>
-          <th scope="col">Unit</th><th scope="col" class="num">Qty</th>${compact ? "" : '<th scope="col" class="num">Trade value</th>'}
+          <th scope="col">Unit</th>${compact ? "" : '<th scope="col" class="num">Trade value</th>'}
         </tr></thead>
         <tbody>${rows.map((r) => `
           <tr${r.value == null ? ' class="is-excluded"' : ""}>
@@ -153,12 +151,11 @@
             <td>${esc(r.trade)}</td>
             <td>${esc(r.material)}${r.fromDrawing && !compact ? ' <span class="bom__src mono">per drawing</span>' : ""}</td>
             <td class="mono">${esc(r.unit)}</td>
-            <td class="num">${rich(r.qty)}</td>
             ${compact ? "" : `<td class="num">${r.value == null ? esc(r.note || "Excluded") : esc(inrExact(r.value))}</td>`}
           </tr>`).join("")}
-          ${more > 0 ? `<tr class="bom__more"><td></td><td colspan="${compact ? 4 : 5}">+ ${more} more trades</td></tr>` : ""}
+          ${more > 0 ? `<tr class="bom__more"><td></td><td colspan="${compact ? 3 : 4}">+ ${more} more trades</td></tr>` : ""}
         </tbody>
-        ${compact ? "" : `<tfoot><tr><td></td><th scope="row" colspan="4">Total, excl. GST</th><td class="num">${esc(inrExact(p.boq.total))}</td></tr></tfoot>`}
+        ${compact ? "" : `<tfoot><tr><td></td><th scope="row" colspan="3">Total, excl. GST</th><td class="num">${esc(inrExact(p.boq.total))}</td></tr></tfoot>`}
       </table>`;
   }
 
@@ -220,7 +217,7 @@
     if (kind === "drawing") return `<div class="lb-sheet">${drawingsFigures(p)}</div>`;
     if (kind === "bom") return `
       <div class="lb-sheet lb-sheet--pad">
-        <p class="lb-note">Material categories generated from the BOQ trades. Items marked <em>per drawing</em> come from the drawing legends; quantities follow the take-off.</p>
+        <p class="lb-note">Material categories for each BOQ trade, with the unit each is measured in. Items marked <em>per drawing</em> come from the drawing legends.</p>
         <div class="table-scroll">${bomTable(p)}</div>
       </div>`;
     return `
@@ -254,10 +251,7 @@
             <span class="rev__node" aria-hidden="true"></span>
             <span class="mono rev__no">${rich(r.rev)}</span>
             <p class="rev__label">${rich(r.label)}</p>
-            <dl class="rev__meta">
-              <div><dt class="label">Date</dt><dd>${rich(r.date)}</dd></div>
-              <div><dt class="label">BOQ value</dt><dd>${typeof r.value === "number" ? esc(short(r.value)) : rich(r.value)}</dd></div>
-            </dl>
+            ${typeof r.value === "number" ? `<dl class="rev__meta"><div><dt class="label">BOQ value</dt><dd>${esc(short(r.value))} excl. GST</dd></div></dl>` : ""}
           </li>`).join("")}
       </ol>`;
   }

@@ -3,38 +3,19 @@
  * Pages read window.SITE and render from it, so change copy, links and
  * numbers in this file only.
  *
- * ==========================================================================
- * TODO LIST — everything still to fill in. Search this file for "[TODO" to
- * find each one in place. Run `node tools/todos.mjs` to print them all.
- * ==========================================================================
- *  1. links.linkedin / links.linkedinLabel ........ your LinkedIn URL
- *  2. links.resume ................................ public link to your resume PDF
- *  3. person.photo ................................ path to a portrait, e.g. "assets/photo.webp"
- *  4. certifications .............................. add any; the block hides while empty
- *  5. site.url .................................... final Vercel domain (also in index.html meta)
- *  6. Every project: duration, revisions, status
- *  7. Every project: BOM quantities (bom[].qty) — material quantities from your take-off
- *  8. Project 1 (Kumbakonam): revision timeline — Rev. numbers, dates and values
- *  9. Project 1: final approved revision and sign-off date (result text)
- * 10. Project 5 (School): city / location
- *
- * Draft notes written as [TODO: …] show as dashed "TODO" chips while
- * showTodos is true, so you can spot them on a preview deploy. Set
- * showTodos to false to hide every unfinished item from the live site.
+ * Client names are anonymised on the site; real names are kept only in
+ * comments next to each project.
  */
 window.SITE = {
-  showTodos: true,
-
   site: {
-    url: "https://srestimatorportfolio.vercel.app/" // [TODO: confirm the Vercel domain]
+    url: "https://srestimatorportfolio.vercel.app/"
   },
 
   person: {
     name: "Dinesh Kumar",
     title: "Senior Estimator · Quantity Surveyor · BOQ Specialist",
     location: "Chennai, Tamil Nadu",
-    coords: "N 13.08° · E 80.27° · Chennai",
-    photo: "" // [TODO: portrait path, e.g. "assets/photo.webp"]
+    coords: "N 13.08° · E 80.27° · Chennai"
   },
 
   links: {
@@ -42,9 +23,8 @@ window.SITE = {
     phone: "+91 99521 29182",
     phoneHref: "tel:+919952129182",
     whatsapp: "https://wa.me/919952129182",
-    linkedin: "",          // [TODO: https://www.linkedin.com/in/…]
-    linkedinLabel: "[TODO: in/your-handle]",
-    resume: ""             // [TODO: public link to resume PDF, e.g. "assets/Dinesh-Kumar-Resume.pdf"]
+    // Generated from this file: node tools/build-resume.mjs
+    resume: "assets/Dinesh-Kumar-Resume.pdf"
   },
 
   hero: {
@@ -128,9 +108,6 @@ window.SITE = {
    * Projects, in value order. Amounts are in rupees, excluding GST, exactly
    * as they appear in the BOQ summary. tools/verify.mjs (and the page itself,
    * in the console) checks that the trades add up to boq.total.
-   *
-   * Client names are anonymised on the site. Real names are kept only in
-   * these comments.
    */
   projects: [
     // Real project: Premier Mall, Kumbakonam — 3rd floor food court & multiplex.
@@ -145,16 +122,13 @@ window.SITE = {
       client: "Retail mall developer",
       scope: "Third-floor food court and multiplex fit-out: civil, demolition and builder's works, finishes, ceilings, canopy and elevation, glazing, electrical and lighting, HVAC, fresh air and kitchen extract, CCTV/IT/music, parking management, BMS, fire alarm and cleaning.",
       role: "Lead estimator: take-off, BOQ, rate analysis and every revision",
-      duration: "[TODO: e.g. 14 months]",
-      revisions: "[TODO: e.g. Rev. 0 – Rev. 6]",
-      status: "[TODO: e.g. Under execution]",
       challenge: [
         "A live mall floor: a 288-seat food court, three theatres, a multiplex screen, kiosks and anchor tenant units all share one ceiling layout.",
         "The client kept revising the design while the estimate was being built. Every change had to move through the quantities, the rates and the summary without breaking the trade totals."
       ],
       result: [
         "One BOQ of ₹42.8 Cr (excl. GST) across 24 trades, kept in step with each client revision so the summary always matched the latest drawings.",
-        "The largest packages are wall finishes (₹3.16 Cr), ceiling (₹2.85 Cr) and electrical (₹2.73 Cr). [TODO: final approved revision and sign-off date]"
+        "The largest packages are wall finishes (₹3.16 Cr), ceiling (₹2.85 Cr) and electrical (₹2.73 Cr)."
       ],
       boq: { total: 428312743.80, gst: 77096293.88, net: 505409037.68 },
       trades: [
@@ -184,11 +158,11 @@ window.SITE = {
         ["Office ELV works", 11650856.97, "elv"]
       ],
       bomOverrides: {},
-      // Revision timeline (hero project only). Fill in each revision.
+      // Revision timeline (hero project only).
       timeline: [
-        { rev: "Rev. 0", label: "First BOQ from the tender drawings", date: "[TODO: date]", value: "[TODO: value]" },
-        { rev: "[TODO: Rev. n]", label: "Client design revisions: layouts, ceiling and tenant changes", date: "[TODO: dates]", value: "[TODO: value]" },
-        { rev: "[TODO: Rev. latest]", label: "Current issue — the summary shown here", date: "[TODO: date]", value: 428312743.80, current: true }
+        { rev: "Rev. 0", label: "First BOQ, priced from the tender drawings" },
+        { rev: "Client revisions", label: "Layout, ceiling and tenant changes, each re-measured and re-priced through the trade totals" },
+        { rev: "Latest issue", label: "The current BOQ summary shown on this page", value: 428312743.80, current: true }
       ],
       images: {
         plate: "assets/projects/retail-mall-kumbakonam/plate-drawing.webp",
@@ -210,9 +184,6 @@ window.SITE = {
       client: "Café & ice-cream brand",
       scope: "Ground and first floor café: civil, interior partitions and wall cladding, wall finishes, ceilings, flooring, doors, joinery, MEP (HVAC, electrical, plumbing and lighting) and café equipment.",
       role: "Lead estimator: take-off, BOQ and rate analysis",
-      duration: "[TODO: e.g. 4 months]",
-      revisions: "[TODO: e.g. Rev. 0 – Rev. 2]",
-      status: "[TODO: e.g. Completed]",
       challenge: [
         "The drawing set runs to 57 sheets: furniture and flooring layouts for both floors, a curved feature wall in rammed-earth texture paint, a stone-and-tile floor pattern, staircase details and separate MEP layouts.",
         "Curved walls and cut-tile flooring don't measure like straight runs, so each was taken off from the layouts piece by piece."
@@ -262,9 +233,6 @@ window.SITE = {
       client: "Ed-tech learning brand (repeat client)",
       scope: "Themed zones — reception, centre zone, counselling room, AI room, space station and makerspace: flooring, partitions, wall finishes, column cladding, ceilings, doors, joinery, toilet fixtures, HVAC, and electrical, lighting, IT and ELV.",
       role: "Lead estimator: take-off, BOQ and rate analysis",
-      duration: "[TODO: e.g. 3 months]",
-      revisions: "[TODO: e.g. Rev. 0 – Rev. 1]",
-      status: "[TODO: e.g. Tender submitted]",
       challenge: [
         "The design arrived as a layout and a set of 3D views. HVAC had its own layout, but the electrical, lighting, IT and ELV drawings were still awaited.",
         "That package is the largest in the BOQ (₹2.84 Cr), so it had to be priced from the layout and the 3D views before the services drawings existed."
@@ -310,9 +278,6 @@ window.SITE = {
       client: "Restaurant group",
       scope: "Ground-floor dining, private dining rooms, ice-cream counter and kitchen; first-floor Asian dining with a café counter. 19 trades, from demolition and builder's works to kitchen equipment, LPG and ELV.",
       role: "Lead estimator: take-off, BOQ and rate analysis",
-      duration: "[TODO: e.g. 2 months]",
-      revisions: "[TODO: e.g. Rev. 0 – Rev. 1]",
-      status: "[TODO: e.g. Completed]",
       challenge: [
         "Many small trades on one budget: demolition, builder's works, LPG, fire alarm and final cleaning each sit under ₹5 lakh, and the shopfront is by the landlord.",
         "Each still needs its own scope line, or it turns up later as a variation."
@@ -363,13 +328,10 @@ window.SITE = {
       short: "Innovation Lab, School",
       category: "Education",
       type: "Innovation lab · School campus fit-out",
-      location: "School campus, [TODO: city]",
+      location: "School campus, India",
       client: "School, through the ed-tech brand (repeat client)",
       scope: "A lab with aerospace and robotics, AI, makerspace, recording and multimedia rooms, a counselling room and a performing stage: flooring, partitions, wall finishes, column cladding, ceiling, doors and joinery.",
       role: "Lead estimator: take-off, BOQ and rate analysis",
-      duration: "[TODO: e.g. 1 month]",
-      revisions: "[TODO: e.g. Rev. 0]",
-      status: "[TODO: e.g. Completed]",
       challenge: [
         "A compact package with a full drawing set: GA, flooring, partition, wall finish and ceiling layouts, each with its own legend — carpet, vinyl and porcelain flooring; gypsum and glass partitions; paint, wallpaper, acoustic and ribbed panels.",
         "Every legend code has to land in the BOQ as its own measured item."

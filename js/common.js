@@ -25,24 +25,8 @@
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-  // Draft notes written as [TODO: …] in data.js. With S.showTodos they render
-  // as dashed "TODO" chips; otherwise they are removed from the page.
-  const TODO_RE = /\[TODO:([^\]]*)\]/g;
-  const stripTodo = (s) => String(s == null ? "" : s).replace(TODO_RE, "").replace(/\s{2,}/g, " ").trim();
-  const hasTodo = (s) => /\[TODO:/.test(String(s == null ? "" : s));
-  const rich = (s) => {
-    const str = String(s == null ? "" : s);
-    if (!S.showTodos) return esc(stripTodo(str));
-    let out = "", last = 0;
-    str.replace(TODO_RE, (m, note, i) => {
-      out += esc(str.slice(last, i)) + `<span class="todo" title="${esc(note.trim())}">TODO${note.trim() ? ": " + esc(note.trim()) : ""}</span>`;
-      last = i + m.length;
-      return m;
-    });
-    return out + esc(str.slice(last));
-  };
-  // A link from data.js that may still be empty.
-  const link = (url, fallback = "#contact") => (url && !hasTodo(url) ? url : fallback);
+  const stripTodo = (s) => String(s == null ? "" : s).trim();
+  const rich = (s) => esc(stripTodo(s));
 
   const asset = (p) => (/^(https?:)?\/\//.test(p) || p.startsWith("data:") ? p : ROOT + p);
 
@@ -62,7 +46,6 @@
     mail: '<svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx=".5"/><path d="m3 5 7 6 7-6"/></svg>',
     phone: '<svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M6.5 2.5h-2a1 1 0 0 0-1 1.1C4 10.6 9.4 16 16.4 16.5a1 1 0 0 0 1.1-1v-2l-3.6-1.4-1.8 1.8A9.5 9.5 0 0 1 6.1 7.9L7.9 6.1Z"/></svg>',
     whatsapp: '<svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M3.2 16.8 4.3 13A7.3 7.3 0 1 1 7 15.7Z"/><path d="M7.6 6.6c.3-.4.8-.4 1 0l.6 1.3c.1.3 0 .6-.2.8l-.4.4c.4.9 1.2 1.7 2.1 2.1l.4-.4c.2-.2.5-.3.8-.2l1.3.6c.4.2.4.7 0 1-.6.6-1.5.9-2.4.5a7 7 0 0 1-3.6-3.6c-.4-.9-.1-1.8.4-2.5Z"/></svg>',
-    linkedin: '<svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="2.5" y="2.5" width="15" height="15" rx=".5"/><path d="M6.5 8.5v5M6.5 6v.01M9.5 13.5v-5m0 2.2c0-1.3.9-2.2 2-2.2s2 .9 2 2.2v2.8"/></svg>',
     doc: '<svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M5 2.5h6.5L15 6v11.5H5Z"/><path d="M11.5 2.5V6H15M7.5 10h5M7.5 13h5"/></svg>'
   };
 
@@ -131,7 +114,7 @@
               <li><a href="${navHref("#contact")}">Contact</a></li>
             </ul>
           </nav>
-          <a class="btn btn--solid btn--sm btn--resume js-resume" href="${esc(link(S.links.resume, ROOT + (IS_HOME ? "" : "index.html") + "#contact"))}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--solid btn--sm btn--resume" href="${esc(asset(S.links.resume))}" download>Resume</a>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
             <span>Menu</span><span class="menu-toggle__bars" aria-hidden="true"></span>
           </button>
@@ -155,7 +138,7 @@
           <li><a href="${navHref("#contact")}"><span class="mono">05</span>Contact</a></li>
         </ul>
         <div class="mobile-menu__foot">
-          <a class="btn btn--solid js-resume" href="${esc(link(S.links.resume, navHref("#contact")))}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--solid" href="${esc(asset(S.links.resume))}" download>Resume</a>
           <a class="btn" href="mailto:${esc(S.links.email)}">Email</a>
         </div>
       </div>`;
@@ -230,8 +213,7 @@
           <li><a class="text-link" href="mailto:${esc(L.email)}">Email</a></li>
           <li><a class="text-link" href="${esc(L.phoneHref)}">Phone</a></li>
           <li><a class="text-link" href="${esc(L.whatsapp)}" ${ext}>WhatsApp<span class="sr-only"> (opens in a new tab)</span></a></li>
-          ${link(L.linkedin, "") ? `<li><a class="text-link" href="${esc(L.linkedin)}" ${ext}>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>` : ""}
-          ${link(L.resume, "") ? `<li><a class="text-link" href="${esc(L.resume)}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a></li>` : ""}
+          <li><a class="text-link" href="${esc(asset(L.resume))}" download>Resume</a></li>
         </ul>
         <div class="footer__base">
           <span class="label">© 2026 ${esc(S.person.name)}</span>
@@ -433,7 +415,7 @@
   window.DK = {
     S, ROOT, IS_HOME, motion, reduced, hasLibs,
     esc, rich, stripTodo, asset, pad2, icons, ext,
-    placeholderSrc, imgFallback, hasTodo, link,
+    placeholderSrc, imgFallback,
     trapFocus, scrollToEl, scrollToHash, initReveals, countUp,
     lenis: null
   };

@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { S, esc, rich, stripTodo, pad2, icons, motion, est: E } = DK;
+  const { S, esc, rich, pad2, icons, motion, est: E } = DK;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
@@ -13,8 +13,7 @@
   const total = S.projects.length;
   const v = E.shortParts(p.boq.total);
 
-  // Paragraphs: keep TODO chips (or drop them), skip anything left empty.
-  const paras = (list) => list.filter((t) => stripTodo(t) || S.showTodos).map((t) => `<p>${rich(t)}</p>`).join("");
+  const paras = (list) => list.filter(Boolean).map((t) => `<p>${rich(t)}</p>`).join("");
 
   const section = (no, id, title, inner, cls = "") => `
     <section class="cs-sec ${cls}" id="${id}" aria-labelledby="${id}-h">
@@ -30,11 +29,10 @@
   const metaRow = [
     ["Type", p.type],
     ["Location", p.location],
-    ["Role", p.role],
-    ["Duration", p.duration],
-    ["Revisions", p.revisions],
-    ["Status", p.status]
-  ].filter(([, val]) => stripTodo(val) || S.showTodos)
+    ["Client", p.client],
+    ["Trades", `${E.tradeCount(p)} in the BOQ`],
+    ["Role", p.role]
+  ].filter(([, val]) => val)
     .map(([k, val]) => `<div class="cs-meta__item"><dt class="label">${k}</dt><dd>${rich(val)}</dd></div>`).join("");
 
   const counts = [
@@ -97,7 +95,7 @@
       <div class="cs-drawings">${E.drawingsFigures(p, { cls: "cs-wide cs-drawing", numPrefix: "" })}</div>`)}
 
     ${section(no(), "bom", "Layer 02 · BOM", `
-      <div class="cs-sec__body"><p>Material categories for each BOQ trade. Items marked <span class="mono">per drawing</span> come from the drawing legends; quantities come from the take-off.</p></div>
+      <div class="cs-sec__body"><p>Material categories for each BOQ trade. Items marked <span class="mono">per drawing</span> come from the drawing legends.</p></div>
       <div class="cs-wide table-scroll">${E.bomTable(p)}</div>`)}
 
     ${section(no(), "boq", "Layer 03 · BOQ", `
