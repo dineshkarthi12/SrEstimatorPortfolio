@@ -2,7 +2,7 @@
 //  - every project's trades add up (to the paisa) to its BOQ summary total
 //  - GST is 18% of the total and net = total + GST, where the summary shows them
 //  - projects are listed in value order
-//  - the headline "₹84 Cr+" holds for the five featured projects
+//  - the "largest single BOQ" headline stat is no bigger than the largest project
 //  - every ₹ figure quoted in challenge/result text matches a real trade or total
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
@@ -39,8 +39,9 @@ S.projects.forEach((p, i) => {
   for (const m of text.matchAll(/₹\d+(?:\.\d+)? (?:Cr|L)\b/g)) ok(known.has(m[0]), `quoted figure ${m[0]} matches the BOQ`);
 });
 
-const total = S.projects.reduce((a, p) => a + p.boq.total, 0);
+const largest = Math.max(...S.projects.map((p) => p.boq.total));
+const stat = S.stats.find((s) => /largest single BOQ/i.test(s.label));
 console.log("");
-ok(total >= 84e7, `portfolio total ${inr(total)} (${short(total)}) supports "₹84 Cr+"`);
+if (stat) ok(stat.value * 1e7 <= largest, `headline "${stat.prefix}${stat.value}${stat.suffix} ${stat.label}" ≤ largest BOQ ${inr(largest)}`);
 console.log(fail ? `\n${fail} check(s) failed` : "\nAll checks passed");
 process.exit(fail ? 1 : 0);

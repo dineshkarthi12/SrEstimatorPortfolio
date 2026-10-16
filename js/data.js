@@ -8,7 +8,7 @@
  */
 window.SITE = {
   site: {
-    url: "https://srestimatorportfolio.vercel.app/"
+    url: "https://srestimator.vercel.app/"
   },
 
   person: {
@@ -37,7 +37,7 @@ window.SITE = {
   stats: [
     { value: 7, suffix: "+", label: "years in estimation" },
     { value: 44, suffix: "+", label: "projects estimated" },
-    { prefix: "₹", value: 84, suffix: " Cr+", label: "BOQ value, 5 featured projects" },
+    { prefix: "₹", value: 42, suffix: " Cr+", label: "largest single BOQ" },
     { value: 20, suffix: "%", label: "lower cost overruns" },
     { value: 18, suffix: "%", label: "less material wastage" },
     { value: 100, suffix: "%", label: "client sign-off on variations" }

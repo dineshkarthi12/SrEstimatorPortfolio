@@ -25,7 +25,6 @@
       if (val != null) el.textContent = val;
     });
     $$(".js-resume").forEach((a) => (a.href = S.links.resume));
-    $$("[data-portfolio-total]").forEach((el) => (el.textContent = E.short(E.portfolioTotal())));
   }
 
   function renderStats() {
@@ -123,18 +122,23 @@
         <h3 class="toolkit__group">${esc(group)}</h3>
         <p class="toolkit__items">${items.split(/,\s*(?![^()]*\))/).map((t) => `<span>${esc(t)}</span>`).join("")}</p>
       </li>`).join("");
-    const certs = S.certifications.filter((c) => DK.stripTodo(c));
-    if (certs.length) {
-      $(".creds__certs").innerHTML = certs.map((c, i) =>
-        `<li><span class="label">C-${pad2(i + 1)}</span><span>${rich(c)}</span></li>`).join("");
-    } else $(".creds__col--certs").remove();
-    $(".creds__langs").innerHTML = S.languages.map(([l, lvl], i) =>
-      `<li><span class="label">L-${pad2(i + 1)}</span><span>${esc(l)} <span class="label">· ${esc(lvl)}</span></span></li>`).join("");
     const e = S.education;
-    $(".creds__edu").innerHTML = `
-      <p class="edu__degree">${esc(e.degree)}</p>
-      <p class="edu__school">${esc(e.school)}</p>
-      <p class="label">${esc(e.years)}</p>`;
+    const certs = S.certifications.filter(Boolean);
+    $(".creds").innerHTML = `
+      <div class="creds__col--edu">
+        <h3 class="label">Education</h3>
+        <p class="edu__degree">${esc(e.degree)}</p>
+        <p class="edu__school">${esc(e.school)}</p>
+        <p class="label">${esc(e.years)}</p>
+      </div>
+      <div class="creds__col--langs">
+        <h3 class="label">Languages</h3>
+        <ul>${S.languages.map(([l, lvl], i) => `<li><span class="label">L-${pad2(i + 1)}</span><span>${esc(l)} <span class="label">· ${esc(lvl)}</span></span></li>`).join("")}</ul>
+      </div>
+      ${certs.length ? `<div class="creds__col--certs">
+        <h3 class="label">Certifications</h3>
+        <ul>${certs.map((c, i) => `<li><span class="label">C-${pad2(i + 1)}</span><span>${esc(c)}</span></li>`).join("")}</ul>
+      </div>` : ""}`;
   }
 
   function renderContact() {
@@ -167,6 +171,7 @@
   function initClock() {
     const out = $(".contact__time");
     if (!out) return;
+    out.closest(".contact__clock").hidden = false;
     let fmt;
     try {
       fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true });
@@ -306,7 +311,8 @@
     const mobile = window.matchMedia("(max-width: 767px)").matches;
     const COUNT = mobile ? 120 : 240;
     const DIR = mobile ? "mobile" : "desktop";
-    const FIRST = Math.min(40, COUNT);
+    // Only a handful of frames gate the loader; the rest stream in behind.
+    const FIRST = Math.min(8, COUNT);
     const src = (i) => `assets/frames/${DIR}/${String(i + 1).padStart(4, "0")}.webp`;
 
     const frames = new Array(COUNT);
@@ -453,7 +459,7 @@
     DK.lenis && DK.lenis.stop();
     let n = 0;
     const firstList = Array.from({ length: FIRST }, (_, i) => i);
-    const timeout = new Promise((r) => setTimeout(r, 9000));
+    const timeout = new Promise((r) => setTimeout(r, 1500));
 
     Promise.race([
       loadList(firstList, 6, () => {
@@ -590,6 +596,7 @@
 
   function initProcessSwipe() {
     const { viewport, cards, setCurrent, setBar } = processParts();
+    $(".process__hint").textContent = "Swipe →";
     let raf = 0;
     const update = () => {
       raf = 0;
@@ -621,6 +628,7 @@
 
     mm.add(PIN_QUERY, () => {
       section.classList.add("is-pinned");
+      $(".process__hint").textContent = "Scroll →";
       let centers = [];
       const measure = () => { centers = cards.map((c) => c.offsetLeft + c.offsetWidth / 2); };
       const dist = () => Math.max(0, track.scrollWidth - viewport.clientWidth);

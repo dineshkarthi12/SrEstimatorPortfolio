@@ -25,11 +25,14 @@ Static site (HTML, CSS, vanilla JS). No build step. Deploys as-is on Vercel.
    node tools/verify.mjs   # trades sum to each BOQ total, GST/net, value order, every ₹ figure in the copy
    ```
 
-3. If you add, remove or rename a project, regenerate the case-study pages:
+3. Write the content into the HTML, so pages read correctly before JavaScript loads (slow networks, link previews, search engines):
 
    ```sh
-   node tools/build-case-pages.mjs
+   npm i -D playwright && npx playwright install chromium   # once
+   node tools/prerender.mjs
    ```
+
+   If you add, remove or rename a project, run `node tools/build-case-pages.mjs` first, then `node tools/prerender.mjs`.
 
 The page also re-checks every BOQ total in the browser console on load.
 
@@ -46,4 +49,4 @@ npx http-server -p 8080 -c-1 .
 2. On vercel.com: **Add New → Project → Import** this repository.
 3. Framework preset: **Other**. Build command: *empty*. Output directory: `.` (root). Install command: *empty*.
 4. **Deploy**. Every push to `main` redeploys.
-5. Copy the production domain into `site.url` in `js/data.js`, and into the `og:url`, `og:image`, `twitter:image` and `canonical` tags in `index.html`, then run `node tools/build-case-pages.mjs` and push.
+5. The site expects the domain `srestimator.vercel.app` (Project → Settings → Domains). If you use another, change `site.url` in `js/data.js` and the `og:url`, `og:image`, `twitter:image` and `canonical` tags in `index.html`, then run `node tools/build-case-pages.mjs && node tools/prerender.mjs` and push.

@@ -1,5 +1,6 @@
 // Writes case-studies/<slug>.html for every project in js/data.js.
-// Run after adding, removing or renaming a project: node tools/build-case-pages.mjs
+// Run after adding, removing or renaming a project, then prerender:
+//   node tools/build-case-pages.mjs && node tools/prerender.mjs
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import vm from "node:vm";
 
@@ -11,7 +12,7 @@ const V = "20261016a";
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const strip = (s) => String(s).trim();
 const short = (v) => v >= 1e7 ? `₹${(v / 1e7).toPrecision(3)} Cr` : `₹${(v / 1e5).toPrecision(3)} L`;
-const base = S.site.url.replace(/\s*\/\/.*$/, "");
+const base = S.site.url.endsWith("/") ? S.site.url : S.site.url + "/";
 
 mkdirSync(root + "case-studies", { recursive: true });
 for (const p of S.projects) {
@@ -59,15 +60,7 @@ for (const p of S.projects) {
   <script defer src="../js/case.js?v=${V}"></script>
 </head>
 <body data-page="case" data-root="../" data-project="${p.slug}">
-  <main id="main"></main>
-
-  <noscript>
-    <div class="noscript">
-      <h1 class="display" style="font-size:3rem">${esc(p.name)}</h1>
-      <p>${esc(desc)} This page needs JavaScript to show the case study.</p>
-      <p><a href="../index.html">Back to the portfolio</a> · <a href="mailto:${esc(S.links.email)}">${esc(S.links.email)}</a></p>
-    </div>
-  </noscript>
+  <main id="main"><!--pr:main--><!--/pr--></main>
 </body>
 </html>
 `;

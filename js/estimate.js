@@ -50,7 +50,6 @@
   }
 
   const tradeCount = (p) => p.trades.length;
-  const portfolioTotal = () => S.projects.reduce((a, p) => a + p.boq.total, 0);
 
   /* ---------- chart: trade-wise breakdown ---------- */
 
@@ -257,7 +256,7 @@
   }
 
   DK.est = {
-    paise, inr, inrExact, short, shortParts, priced, check, verifyAll, tradeCount, portfolioTotal,
+    paise, inr, inrExact, short, shortParts, priced, check, verifyAll, tradeCount,
     chart, initChartTips, bomRows, bomTable, KINDS, KIND_NAMES, plate, panel, drawingsFigures,
     checkLine, boqTotals, timeline, img
   };
