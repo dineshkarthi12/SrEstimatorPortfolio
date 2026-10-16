@@ -4,8 +4,7 @@
 //  - projects are listed in value order
 //  - the headline "₹84 Cr+" holds for the five featured projects
 //  - every ₹ figure quoted in challenge/result text matches a real trade or total
-//  - the resume PDF the site links to exists
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -42,7 +41,6 @@ S.projects.forEach((p, i) => {
 
 const total = S.projects.reduce((a, p) => a + p.boq.total, 0);
 console.log("");
-ok(existsSync(root + S.links.resume), `resume file ${S.links.resume} exists`);
 ok(total >= 84e7, `portfolio total ${inr(total)} (${short(total)}) supports "₹84 Cr+"`);
 console.log(fail ? `\n${fail} check(s) failed` : "\nAll checks passed");
 process.exit(fail ? 1 : 0);

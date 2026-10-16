@@ -23,8 +23,7 @@ window.SITE = {
     phone: "+91 99521 29182",
     phoneHref: "tel:+919952129182",
     whatsapp: "https://wa.me/919952129182",
-    // Generated from this file: node tools/build-resume.mjs
-    resume: "assets/Dinesh-Kumar-Resume.pdf"
+    resume: "https://drive.google.com/file/d/1UccmsDK52SXyLRwqZdhD5so4dakougRq/view?usp=drivesdk"
   },
 
   hero: {

@@ -114,7 +114,7 @@
               <li><a href="${navHref("#contact")}">Contact</a></li>
             </ul>
           </nav>
-          <a class="btn btn--solid btn--sm btn--resume" href="${esc(asset(S.links.resume))}" download>Resume</a>
+          <a class="btn btn--solid btn--sm btn--resume" href="${esc(S.links.resume)}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
             <span>Menu</span><span class="menu-toggle__bars" aria-hidden="true"></span>
           </button>
@@ -138,7 +138,7 @@
           <li><a href="${navHref("#contact")}"><span class="mono">05</span>Contact</a></li>
         </ul>
         <div class="mobile-menu__foot">
-          <a class="btn btn--solid" href="${esc(asset(S.links.resume))}" download>Resume</a>
+          <a class="btn btn--solid" href="${esc(S.links.resume)}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn" href="mailto:${esc(S.links.email)}">Email</a>
         </div>
       </div>`;
@@ -213,7 +213,7 @@
           <li><a class="text-link" href="mailto:${esc(L.email)}">Email</a></li>
           <li><a class="text-link" href="${esc(L.phoneHref)}">Phone</a></li>
           <li><a class="text-link" href="${esc(L.whatsapp)}" ${ext}>WhatsApp<span class="sr-only"> (opens in a new tab)</span></a></li>
-          <li><a class="text-link" href="${esc(asset(L.resume))}" download>Resume</a></li>
+          <li><a class="text-link" href="${esc(L.resume)}" ${ext}>Resume<span class="sr-only"> (opens in a new tab)</span></a></li>
         </ul>
         <div class="footer__base">
           <span class="label">© 2026 ${esc(S.person.name)}</span>

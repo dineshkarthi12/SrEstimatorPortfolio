@@ -13,7 +13,6 @@ Static site (HTML, CSS, vanilla JS). No build step. Deploys as-is on Vercel.
 | `js/common.js` | Header, menus, footer, smooth scroll, page transitions, helpers |
 | `css/style.css`, `css/case.css` | Styles ("architectural drawing sheet" theme) |
 | `case-studies/*.html` | Generated shells, one per project |
-| `assets/Dinesh-Kumar-Resume.pdf` | One-page resume, generated from `js/data.js` |
 | `assets/projects/<slug>/` | Drawing crops, layer plates and blurred BOQ summary sheets |
 | `assets/frames/` | Hero scroll animation (240 desktop / 120 mobile frames) |
 
@@ -26,14 +25,7 @@ Static site (HTML, CSS, vanilla JS). No build step. Deploys as-is on Vercel.
    node tools/verify.mjs   # trades sum to each BOQ total, GST/net, value order, every ₹ figure in the copy
    ```
 
-3. Rebuild the resume PDF (`assets/Dinesh-Kumar-Resume.pdf`) after changing experience, skills or projects:
-
-   ```sh
-   npm i -D playwright && npx playwright install chromium   # once
-   node tools/build-resume.mjs
-   ```
-
-4. If you add, remove or rename a project, regenerate the case-study pages:
+3. If you add, remove or rename a project, regenerate the case-study pages:
 
    ```sh
    node tools/build-case-pages.mjs

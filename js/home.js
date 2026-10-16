@@ -24,12 +24,7 @@
       const val = el.dataset.bind.split(".").reduce((o, k) => (o ? o[k] : undefined), S);
       if (val != null) el.textContent = val;
     });
-    $$(".js-resume").forEach((a) => {
-      a.href = DK.asset(S.links.resume);
-      a.setAttribute("download", "");
-      a.removeAttribute("target");
-      a.querySelector(".sr-only")?.remove();
-    });
+    $$(".js-resume").forEach((a) => (a.href = S.links.resume));
     $$("[data-portfolio-total]").forEach((el) => (el.textContent = E.short(E.portfolioTotal())));
   }
 
@@ -160,7 +155,7 @@
         `<button class="contact__copy" type="button" data-copy="${esc(L.email)}" aria-label="Copy email address">Copy</button>`, "contact__row--email"),
       row("Phone", esc(L.phone), L.phoneHref, "phone", false),
       row("WhatsApp", "Message me on WhatsApp", L.whatsapp, "whatsapp", true),
-      row("Resume", "Download resume (PDF)", DK.asset(L.resume), "doc", false, "", "", "download")
+      row("Resume", "Resume on Google Drive", L.resume, "doc", true)
     ].join("") + '<li class="sr-only" aria-live="polite" id="copy-status"></li>';
   }
 
