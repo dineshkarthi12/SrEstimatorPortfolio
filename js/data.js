@@ -19,7 +19,7 @@ window.SITE = {
   },
 
   links: {
-    email: "dineshkarthi899@gmail.com",
+    email: "dineshkarthi911@gmail.com",
     phone: "+91 84894 82709",
     phoneHref: "tel:+918489482709",
     whatsapp: "https://wa.me/918489482709",
