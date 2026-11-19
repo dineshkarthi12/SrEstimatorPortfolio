@@ -19,10 +19,10 @@ window.SITE = {
   },
 
   links: {
-    email: "dineshkumarsn33@gmail.com",
-    phone: "+91 99521 29182",
-    phoneHref: "tel:+919952129182",
-    whatsapp: "https://wa.me/919952129182",
+    email: "dineshkarthi911@gmail.com",
+    phone: "+91 84894 82709",
+    phoneHref: "tel:+918489482709",
+    whatsapp: "https://wa.me/918489482709",
     resume: "https://drive.google.com/file/d/1UccmsDK52SXyLRwqZdhD5so4dakougRq/view?usp=drivesdk"
   },
 
